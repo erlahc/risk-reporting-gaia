@@ -61,7 +61,7 @@ def generate_granting(countries,segments,dates,granting_fields,nb_segments=5):
     return pd.DataFrame(a,columns=granting_fields)
 
 def generate_stock(countries,segments,dates,stock_fields,nb_segments=5):
-    encours_i=10000000000
+    encours_i=1000
     
     #stratas={'R0':0.9,'R1':0.05,'R2':0.03,'R3':0.008,'R4':0.007,'R5':0.003,'R6':0.001,'R7':0.001,'CTX':0.05,'INS':0.05}
     stratas_i=np.array([0.9,0.05,0.03,0.008,0.007,0.003,0.001,0.001,0.05,0.05])
@@ -85,8 +85,8 @@ def generate_stock(countries,segments,dates,stock_fields,nb_segments=5):
         unpaid=encours*unpaid_i
  
         temp=list(zip(country,segment,dates))
-        df1=pd.concat([pd.DataFrame(temp),pd.DataFrame(stratas),
-                  pd.DataFrame(transfert),pd.DataFrame(unpaid)],axis=1)
+        df1=pd.concat([pd.DataFrame(temp),pd.DataFrame(stratas).round(4),
+                  pd.DataFrame(transfert).round(4),pd.DataFrame(unpaid).round(4)],axis=1)
         df1.columns=stock_fields
         df_stock=pd.concat([df_stock,df1]) 
         
@@ -98,18 +98,19 @@ if __name__=='__main__':
     dates=['201801','201802','201803','201804','201805','201806','201807','201808',
            '201809','201810','201811','201812','201901','201902','201903','201904']
     
-    granting_fields=['COUNTRY','DATE','SEGMENT','PRODUCTION','FPD',
-                             'RISK3M','RISK6M','RISK12M',
-                             'ACTIVE3M','ACTIVE6M','ACTIVE12M',
+    granting_fields=['COUNTRY','DATE','SEGMENT','Production','FPD',
+                             'Risk3M','Risk6M','Risk12M',
+                             'Active3M','Active6M','Active12M',
                              'DEMAND','ACCEPTE','REFUSE','OK_SYS','ETUD_SYS','REF_SYS']
     
     stock_fields=['COUNTRY','DATE','SEGMENT',
                   'v_OST_R0','v_OST_R1','v_OST_R2','v_OST_R3','v_OST_R4','v_OST_R5','v_OST_R6','v_OST_R7',
                   'v_OST_CTX','v_OST_INS',
-                  'v_TS_R0','v_TS_R1','v_TS_R2','v_TS_R3','v_TS_R4','v_TS_R5','v_TS_R6','v_TS_R7','v_TS_CTX',
-                  '1ST UNPAID']
+                  'TS0','TS1','TS2','TS3','TS4','TS5','TS6','TS7','TSCTX',
+                  '1UNPAID']
     
     df_granting=generate_granting(countries,segments,dates,granting_fields,5)
     df_stock=generate_stock(countries,segments,dates,stock_fields,5)
-    
+    df_stock.to_csv('stock_gen.csv',decimal=',',sep=';',index=False)
+    df_granting.to_csv('granting_gen.csv',decimal=',',sep=';',index=False)
     
