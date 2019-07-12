@@ -11,7 +11,7 @@ from plotFunctions import *
 ###
 #APP INITIALIZATION
 ###
-db=Gaia('granting.csv','stock.csv')
+db=Gaia('granting_gen.csv','stock_gen.csv')
 countries = db.df_granting['COUNTRY'].unique()
 app = dash.Dash()
 app.css.append_css({
@@ -105,8 +105,8 @@ def set_axes_value(available_options):
     [Input('id-countries', 'value'),
     Input('id-prod-fpd', 'value')])
 def filter_vintage_by_country(selected_country,selected_prod_fpd):
-	return display_vintage(db.get_vintage_by_country(selected_country),selected_country
-		),display_prod_fpd(db.get_production_by_country(selected_country),selected_country,selected_prod_fpd)
+	return display_vintage(db.get_vintage(selected_country),selected_country
+		),display_prod_fpd(db.get_granting_data(selected_country,selected_prod_fpd),selected_country,selected_prod_fpd)
 
 @app.callback(
     [Output('vintage-segment', 'figure'),
@@ -115,8 +115,8 @@ def filter_vintage_by_country(selected_country,selected_prod_fpd):
      Input('id-axes', 'value'),
      Input('id-prod-fpd', 'value')])
 def filter_vintage_by_segment(selected_country, selected_axes,selected_prod_fpd):
-	return display_vintage(db.get_vintage_by_segment(selected_country, selected_axes),selected_country,selected_axes
-		),display_prod_fpd(db.get_production_by_segment(selected_country, selected_axes),selected_country,selected_prod_fpd,selected_axes)
+	return display_vintage(db.get_vintage(selected_country,selected_axes),selected_country,selected_axes
+		),display_prod_fpd(db.get_granting_data(selected_country,selected_prod_fpd,selected_axes),selected_country,selected_prod_fpd,selected_axes)
 
 if __name__ == '__main__':
 	app.run_server(debug=True)

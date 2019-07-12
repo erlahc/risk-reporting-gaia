@@ -74,22 +74,22 @@ def display_rr(filtered_df,metric):
 		
 	return{
 		'data':traces,
-		'layout': {'title':filtered_df['COUNTRY'].iloc[0],
+		'layout': {'title':metric,
 					'xaxis':dict(categoryorder='array', categoryarray=filtered_df['DATE'].values, type="category"),
 					'yaxis':dict(tickformat=',.0%',hoverformat=',.0%'),
 					'showlegend':False}
 	}
 
-def display_os(filtered_df):
+def display_stock_data(filtered_df,metric):
 	traces=[]
 	traces.append(go.Bar(
 		x=filtered_df['DATE'],
-	    y=filtered_df['Outstanding'],
+	    y=filtered_df[metric],
 		))
 		
 	return{
 		'data':traces,
-		'layout': {'title':'Outstanding',
+		'layout': {'title':metric,
 					'xaxis':dict(categoryorder='array', categoryarray=filtered_df['DATE'].values, type="category")}
 	}
 

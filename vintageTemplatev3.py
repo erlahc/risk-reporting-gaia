@@ -11,7 +11,7 @@ from plotFunctions import *
 ###
 #APP INITIALIZATION
 ###
-db=Gaia('granting.csv','stock.csv')
+db=Gaia('granting_gen.csv','stock_gen.csv')
 countries = db.df_granting['COUNTRY'].unique()
 app = dash.Dash()
 app.css.append_css({
@@ -86,8 +86,8 @@ def set_title(selected_country):
     [Input('id-countries', 'value')])
 def set_multi_vintages(selected_country):
 	try:
-		a=db.df_granting[db.df_granting['COUNTRY']==selected_country]['SEGMENT'].unique()[0]
-		return display_multi_vintages(db.get_vintage_by_segment(selected_country,a),selected_country,a)
+		available_segment=db.df_granting[db.df_granting['COUNTRY']==selected_country]['SEGMENT'].unique()[0]
+		return display_multi_vintages(db.get_vintage(selected_country,available_segment),selected_country,available_segment)
 	except IndexError:
 		return 0
 	
@@ -96,8 +96,8 @@ def set_multi_vintages(selected_country):
     [Input('id-countries', 'value')])
 def set_multi_vintages(selected_country):
 	try:
-		a=db.df_granting[db.df_granting['COUNTRY']==selected_country]['SEGMENT'].unique()[1]
-		return display_multi_vintages(db.get_vintage_by_segment(selected_country,a),selected_country,a)
+		available_segment=db.df_granting[db.df_granting['COUNTRY']==selected_country]['SEGMENT'].unique()[1]
+		return display_multi_vintages(db.get_vintage(selected_country,available_segment),selected_country,available_segment)
 	except IndexError:
 		return 0
 
@@ -106,8 +106,8 @@ def set_multi_vintages(selected_country):
     [Input('id-countries', 'value')])
 def set_multi_vintages(selected_country):
 	try:
-		a=db.df_granting[db.df_granting['COUNTRY']==selected_country]['SEGMENT'].unique()[2]
-		return display_multi_vintages(db.get_vintage_by_segment(selected_country,a),selected_country,a)
+		available_segment=db.df_granting[db.df_granting['COUNTRY']==selected_country]['SEGMENT'].unique()[2]
+		return display_multi_vintages(db.get_vintage(selected_country,available_segment),selected_country,available_segment)
 	except IndexError:
 		return 0
 
@@ -116,8 +116,8 @@ def set_multi_vintages(selected_country):
     [Input('id-countries', 'value')])
 def set_multi_vintages(selected_country):
 	try:
-		a=db.df_granting[db.df_granting['COUNTRY']==selected_country]['SEGMENT'].unique()[3]
-		return display_multi_vintages(db.get_vintage_by_segment(selected_country,a),selected_country,a)
+		available_segment=db.df_granting[db.df_granting['COUNTRY']==selected_country]['SEGMENT'].unique()[3]
+		return display_multi_vintages(db.get_vintage(selected_country,available_segment),selected_country,available_segment)
 	except IndexError:
 		return 0
 
@@ -126,8 +126,8 @@ def set_multi_vintages(selected_country):
     [Input('id-countries', 'value')])
 def set_multi_vintages(selected_country):
 	try:
-		a=db.df_granting[db.df_granting['COUNTRY']==selected_country]['SEGMENT'].unique()[4]
-		return display_multi_vintages(db.get_vintage_by_segment(selected_country,a),selected_country,a)
+		available_segment=db.df_granting[db.df_granting['COUNTRY']==selected_country]['SEGMENT'].unique()[4]
+		return display_multi_vintages(db.get_vintage(selected_country,available_segment),selected_country,available_segment)
 	except IndexError:
 		return 0
 
@@ -136,8 +136,8 @@ def set_multi_vintages(selected_country):
     [Input('id-countries', 'value')])
 def set_multi_vintages(selected_country):
 	try:
-		a=db.df_granting[db.df_granting['COUNTRY']==selected_country]['SEGMENT'].unique()[5]
-		return display_multi_vintages(db.get_vintage_by_segment(selected_country,a),selected_country,a)
+		available_segment=db.df_granting[db.df_granting['COUNTRY']==selected_country]['SEGMENT'].unique()[5]
+		return display_multi_vintages(db.get_vintage(selected_country,available_segment),selected_country,available_segment)
 	except IndexError:
 		return 0
 
@@ -146,8 +146,8 @@ def set_multi_vintages(selected_country):
     [Input('id-countries', 'value')])
 def set_multi_vintages(selected_country):
 	try:
-		a=db.df_granting[db.df_granting['COUNTRY']==selected_country]['SEGMENT'].unique()[6]
-		return display_multi_vintages(db.get_vintage_by_segment(selected_country,a),selected_country,a)
+		available_segment=db.df_granting[db.df_granting['COUNTRY']==selected_country]['SEGMENT'].unique()[6]
+		return display_multi_vintages(db.get_vintage(selected_country,available_segment),selected_country,available_segment)
 	except IndexError:
 		return 0
 
@@ -156,8 +156,8 @@ def set_multi_vintages(selected_country):
     [Input('id-countries', 'value')])
 def set_multi_vintages(selected_country):
 	try:
-		a=db.df_granting[db.df_granting['COUNTRY']==selected_country]['SEGMENT'].unique()[7]
-		return display_multi_vintages(db.get_vintage_by_segment(selected_country,a),selected_country,a)
+		available_segment=db.df_granting[db.df_granting['COUNTRY']==selected_country]['SEGMENT'].unique()[7]
+		return display_multi_vintages(db.get_vintage(selected_country,available_segment),selected_country,available_segment)
 	except IndexError:
 		return 0
 

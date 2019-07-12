@@ -84,7 +84,7 @@ def generate_stock(countries,segments,dates,stock_fields,nb_segments=5):
         transfert=transfert_i*encours.reshape(len(encours),1)
         unpaid=encours*unpaid_i
  
-        temp=list(zip(country,segment,dates))
+        temp=list(zip(country,dates,segment))
         df1=pd.concat([pd.DataFrame(temp),pd.DataFrame(stratas).round(4),
                   pd.DataFrame(transfert).round(4),pd.DataFrame(unpaid).round(4)],axis=1)
         df1.columns=stock_fields
