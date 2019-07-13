@@ -7,6 +7,7 @@ import dash_html_components as html
 from dash.dependencies import Input, Output
 from gaia import *
 from plotFunctions import *
+import ipdb
 
 ###
 #APP INITIALIZATION
@@ -87,14 +88,17 @@ app.layout = html.Div([
 	Output('id-R0R4', 'figure'),
 	Output('id-R2+', 'figure'),
 	Output('id-os', 'figure'),
-	Output('id-1unpaid', 'figure')],
+	Output('id-1unpaid', 'figure'),
+	Output('id-os-segment-country', 'figure')],
     [Input('id-countries', 'value')])
 def filter_rr_by_country(selected_country):
 	return display_rr(db.get_rr(selected_country)[['COUNTRY','DATE','R0R1']],'R0R1'
 		),display_rr(db.get_rr(selected_country)[['COUNTRY','DATE','R0R4']],'R0R4'
 		),display_rr(db.get_rr(selected_country)[['COUNTRY','DATE','R2+']],'R2+'
 		),display_stock_data(db.get_stock_data(selected_country,'OS'),'OS'
-		),display_stock_data(db.get_stock_data(selected_country,'1UNPAID'),'1UNPAID')
+		),display_stock_data(db.get_stock_data(selected_country,'1UNPAID'),'1UNPAID'
+		),display_stock_data_donut_segment(db.get_stock_data(selected_country,'OS','ALL'),'OS','201812')
+
 
 if __name__ == '__main__':
 	app.run_server(debug=True)

@@ -93,4 +93,17 @@ def display_stock_data(filtered_df,metric):
 					'xaxis':dict(categoryorder='array', categoryarray=filtered_df['DATE'].values, type="category")}
 	}
 
+def display_stock_data_donut_segment(filtered_df,metric,date):
+	values=[]
+	labels=[]
+	for i in filtered_df['SEGMENT'].unique():
+		values.append(int(filtered_df[(filtered_df['SEGMENT']==i)&(filtered_df['DATE']==date)][metric]))
+		labels.append(i)
+	trace=go.Pie(labels=labels, values=values)
+
+	return{
+	'data':[trace],
+	'layout':{'title':metric + ' by segment'
+		}
+	}
 

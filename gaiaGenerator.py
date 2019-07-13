@@ -93,7 +93,7 @@ def generate_stock(countries,segments,dates,stock_fields,nb_segments=5):
     return df_stock
     
 if __name__=='__main__':
-    countries=['PITA','PPLK','PPOR','PDEU']
+    countries=['PITA','PPLK','PPOR','PDEU','PESP','PFRA']
     segments=['Auto','Retail','Direct','Cards']
     dates=['201801','201802','201803','201804','201805','201806','201807','201808',
            '201809','201810','201811','201812','201901','201902','201903','201904']
@@ -109,8 +109,9 @@ if __name__=='__main__':
                   'TS0','TS1','TS2','TS3','TS4','TS5','TS6','TS7','TSCTX',
                   '1UNPAID']
     
-    df_granting=generate_granting(countries,segments,dates,granting_fields,5)
-    df_stock=generate_stock(countries,segments,dates,stock_fields,5)
+    nb_segments=20
+    df_granting=generate_granting(countries,segments,dates,granting_fields,nb_segments)
+    df_stock=generate_stock(countries,segments,dates,stock_fields,nb_segments)
     df_stock.to_csv('stock_gen.csv',decimal=',',sep=';',index=False)
     df_granting.to_csv('granting_gen.csv',decimal=',',sep=';',index=False)
     
