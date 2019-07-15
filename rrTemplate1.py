@@ -89,15 +89,17 @@ app.layout = html.Div([
 	Output('id-R2+', 'figure'),
 	Output('id-os', 'figure'),
 	Output('id-1unpaid', 'figure'),
-	Output('id-os-segment-country', 'figure')],
+	Output('id-os-segment-country', 'figure'),
+	Output('id-os-country-total', 'figure')],
     [Input('id-countries', 'value')])
 def filter_rr_by_country(selected_country):
 	return display_rr(db.get_rr(selected_country)[['COUNTRY','DATE','R0R1']],'R0R1'
 		),display_rr(db.get_rr(selected_country)[['COUNTRY','DATE','R0R4']],'R0R4'
 		),display_rr(db.get_rr(selected_country)[['COUNTRY','DATE','R2+']],'R2+'
-		),display_stock_data(db.get_stock_data(selected_country,'OS'),'OS'
-		),display_stock_data(db.get_stock_data(selected_country,'1UNPAID'),'1UNPAID'
-		),display_stock_data_donut_segment(db.get_stock_data(selected_country,'OS','ALL'),'OS','201812')
+		),display_stock_data(db.get_stock_data('OS',selected_country),'OS'
+		),display_stock_data(db.get_stock_data('1UNPAID',selected_country),'1UNPAID'
+		),display_stock_data_donut_segment(db.get_stock_data('OS',selected_country,'ALL'),'OS','201812'
+		),display_stock_data_donut_country(db.get_stock_data('OS'),'OS','201812',selected_country)
 
 
 if __name__ == '__main__':
