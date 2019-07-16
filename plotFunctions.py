@@ -18,9 +18,9 @@ def display_vintage(filtered_df,country,segment=''):
 	return{
 		'data':traces,
 		'layout': {	'xaxis':dict(categoryorder='array', categoryarray=filtered_df[i]['DATE'].values, type="category"),
-					'yaxis':dict(tickformat=',.1%',hoverformat=',.1%'),
-					'legend':dict(orientation='h',xanchor='left',y=-0.25),
-					'margin':dict(t=20,b=20,l=50,r=0)}
+					'yaxis':dict(tickformat=',.1%',hoverformat=',.1%',tickangle=270),
+					'legend':dict(orientation='h',xanchor='left',y=-0.40,font={'size':10}),
+					'margin':dict(t=25,b=60,l=30,r=0)}
 	}
 
 def display_multi_vintages(filtered_df,country,segment=''):
@@ -41,8 +41,8 @@ def display_multi_vintages(filtered_df,country,segment=''):
 					'yaxis':dict(tickformat=',.0%',hoverformat=',.0%'),
 					'showlegend':False,
 					'autosize':False,
-					'height':330,
-					'margin':go.layout.Margin(l=25,r=10,b=60,t=50,pad=2)}
+					'height':200,
+					'margin':go.layout.Margin(l=30,r=0,b=60,t=25)}
 	}
 
 def display_prod_fpd(filtered_df,country,prod_or_fpd,segment=''):
@@ -61,10 +61,15 @@ def display_prod_fpd(filtered_df,country,prod_or_fpd,segment=''):
 	return{
 		'data':traces,
 		'layout': {'title':titre,
-					'xaxis':dict(categoryorder='array', categoryarray=filtered_df['DATE'].values, type="category")}
+					'xaxis':dict(categoryorder='array', categoryarray=filtered_df['DATE'].values, type="category"),
+					'showlegend':False,
+					'autosize':False,
+					'height':200,
+					'margin':go.layout.Margin(l=30,r=0,b=60,t=25)
+					}
 	}
 
-def display_rr(filtered_df,metric):
+def display_rr(filtered_df,metric,height=300):
 	traces=[]
 	traces.append(go.Scatter(
 			x=filtered_df['DATE'],
@@ -77,7 +82,8 @@ def display_rr(filtered_df,metric):
 		'layout': {	'xaxis':dict(categoryorder='array', categoryarray=filtered_df['DATE'].values, type="category"),
 					'yaxis':dict(tickformat=',.1%',hoverformat=',.1%'),
 					'showlegend':False,
-					'margin':dict(t=20,b=100,l=50,r=0)}
+					'height':height,
+					'margin':dict(t=20,b=60,l=50,r=0)}
 	}
 
 def display_stock_data(filtered_df,metric):
@@ -89,8 +95,13 @@ def display_stock_data(filtered_df,metric):
 		
 	return{
 		'data':traces,
-		'layout': {'title':metric,
-					'xaxis':dict(categoryorder='array', categoryarray=filtered_df['DATE'].values, type="category")}
+		'layout': {
+					'xaxis':dict(categoryorder='array', categoryarray=filtered_df['DATE'].values, type="category"),
+					'showlegend':False,
+					'autosize':False,
+					'height':200,
+					'margin':go.layout.Margin(l=30,r=0,b=60,t=25)
+					}
 	}
 
 def display_stock_data_donut_segment(filtered_df,metric,date):
@@ -103,7 +114,8 @@ def display_stock_data_donut_segment(filtered_df,metric,date):
 
 	return{
 	'data':[trace],
-	'layout':{'title':metric + ' by segment'
+	'layout':{
+			'margin':go.layout.Margin(l=30,r=0,b=20,t=20)
 		}
 	}
 
@@ -116,6 +128,7 @@ def display_stock_data_donut_country(filtered_df,metric,date,country):
 
 	return{
 	'data':[trace],
-	'layout':{'title':metric + ' by country'
+	'layout':{
+			'margin':go.layout.Margin(l=30,r=0,b=20,t=20)
 		}
 	}
