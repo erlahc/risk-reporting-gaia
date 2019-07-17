@@ -29,6 +29,7 @@ def get_menu():
         dcc.Link('Granting   ', href='/granting', className="tab"),
         dcc.Link('Vintages   ', href='/vintages', className="tab"),
         dcc.Link('Stock   ', href='/stock', className="tab"),
+        #dcc.Link('Full printable view   ', href='/full-view', className="tab"),
         get_country(countries)
     ], className="row ")
     return menu
@@ -60,11 +61,9 @@ def get_graph1(name,height=300,width=340,bs_type='six columns',title='',jump='')
   else:
     return html.Div([fig],className=bs_type)
 
-def get_graph_with_dropdown(name,height=300,dropdown=['Auto','Production']):
+def get_graph_with_dropdown(name,height=300):
   graph=html.Div([
-    dcc.Dropdown(id='id-segments',
-          options=[{'label': i, 'value': i} for i in dropdown],
-          value=dropdown[0]
+    dcc.Dropdown(id='id-segments'
     ),
     dcc.Graph(id=name,
       figure={'layout':go.Layout(
@@ -113,7 +112,7 @@ overview = html.Div([
 granting = html.Div([
                 html.Div([
                   get_graph1(name='vintage-global',height=250,jump='All segments'),
-                  get_graph_with_dropdown(name='vintage-segment',height=250,dropdown=['Auto','Retail']),
+                  get_graph_with_dropdown(name='vintage-segment',height=250),
                 ], className="row "),
                 html.Div([
                   dcc.RadioItems(id='id-prod-or-fpd',
@@ -190,6 +189,23 @@ app.layout = html.Div([
   ],className='subpage')
   ],className='page')
 
+#Trigger dropdown when page is changing
+@app.callback(
+  Output('id-countries', 'value'),
+  [Input('url', 'pathname')],
+  [State('id-countries','value')])
+def update_country(path,selected_country):
+  return selected_country
+
+#update segment list
+@app.callback(
+  Output('id-segments','options'),
+  [Input('id-countries','value')]
+  )
+def update_segment_list(selected_country):
+  a=db.df_granting[db.df_granting['COUNTRY']==selected_country]['SEGMENT'].unique()
+  return [{'label':i,'value':i} for i in a]
+
 # Update page
 @app.callback(
   dash.dependencies.Output('page-content', 'children'),
@@ -228,10 +244,11 @@ def update_ras_charts(selected_country):
   [Output('vintage-global', 'figure'),
   Output('prod-fpd-global', 'figure'),
   Output('id-prod-country', 'figure')],
-    [Input('id-countries', 'value')])
-def update_granting_charts(selected_country):
+    [Input('id-countries', 'value'),
+    Input('id-prod-or-fpd','value')])
+def update_granting_charts(selected_country,prod_or_fpd):
   return display_vintage(db.get_vintage(selected_country),selected_country
-    ),display_prod_fpd(db.get_granting_data('Production',selected_country),selected_country,'Production'
+    ),display_prod_fpd(db.get_granting_data(prod_or_fpd,selected_country),selected_country,prod_or_fpd
     ),display_stock_data_donut_country(db.get_granting_data('Production'),'Production','201812',selected_country
     )
 
@@ -240,10 +257,11 @@ def update_granting_charts(selected_country):
   Output('prod-fpd-segment', 'figure'),
   Output('id-prod-segment', 'figure')],
     [Input('id-countries', 'value'),
-    Input('id-segments', 'value')])
-def update_granting_charts(selected_country,selected_segment):
+    Input('id-segments', 'value'),
+    Input('id-prod-or-fpd','value')])
+def update_granting_charts(selected_country,selected_segment,prod_or_fpd):
   return display_vintage(db.get_vintage(selected_country,selected_segment),selected_country,selected_segment
-    ),display_prod_fpd(db.get_granting_data('Production',selected_country,selected_segment),selected_country,'Production',selected_segment
+    ),display_prod_fpd(db.get_granting_data(prod_or_fpd,selected_country,selected_segment),selected_country,prod_or_fpd,selected_segment
     ),display_stock_data_donut_segment(db.get_granting_data('Production',selected_country,'ALL'),'Production','201812'
     )
 
@@ -356,6 +374,12 @@ external_css = ["https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normaliz
 
 for css in external_css:
     app.css.append_css({"external_url": css})
+
+external_js = ["https://code.jquery.com/jquery-3.2.1.min.js",
+               "https://codepen.io/bcd/pen/YaXojL.js"]
+
+for js in external_js:
+    app.scripts.append_script({"external_url": js})
 
 if __name__ == '__main__':
     app.run_server(debug=True)
