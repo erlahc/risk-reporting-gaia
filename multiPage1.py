@@ -36,8 +36,7 @@ def get_menu():
 def get_country(countryList):
   countries=html.Div([
               dcc.Dropdown(id='id-countries',
-              options=[{'label': i, 'value': i} for i in countryList],
-              value=countryList[0]
+              options=[{'label': i, 'value': i} for i in countryList]
               )
             ],className="row ")
   return countries
@@ -83,11 +82,7 @@ def get_graph_with_dropdown(name,height=300,dropdown=['Auto','Production']):
   return graph
 
 ## Page layouts
-overview = html.Div([  # page 1
-        print_button(),
-        html.Div([
-            get_menu(),
-            # Row 3
+overview = html.Div([
                 html.Div([
                   html.Div([
                     html.H6('Vintage',
@@ -112,15 +107,10 @@ overview = html.Div([  # page 1
                   get_graph1('RAS-R0R4'),
                   get_graph1('RAS-R2+')
             ], className="row ")
-            ], className="subpage")
-    ], className="page")
+            ])
 
 #Page 2
-granting = html.Div([  # page 3
-              print_button(),
-              html.Div([
-                get_menu(),
-              # Row ``
+granting = html.Div([
                 html.Div([
                   get_graph1(name='vintage-global',height=250,jump='All segments'),
                   get_graph_with_dropdown(name='vintage-segment',height=250,dropdown=['Auto','Retail']),
@@ -140,13 +130,9 @@ granting = html.Div([  # page 3
                   get_graph1('id-prod-country',250),
                   get_graph1('id-prod-segment',250)
                 ], className="row "),
-              ], className="subpage")
-          ], className="page")
+              ])
 
-vintages = html.Div([  # page 3
-        print_button(),
-        html.Div([
-            get_menu(),
+vintages = html.Div([
             # Row ``
             html.H6(["Vintage by segment"],
                             className="gs-header gs-table-header padded"),
@@ -167,13 +153,9 @@ vintages = html.Div([  # page 3
                   get_graph1('vintage8',175),
             ], className="row "),
             # Row 2
-        ], className="subpage")
-    ], className="page")
+        ])
 
-stock = html.Div([  # page 3
-              print_button(),
-              html.Div([
-                get_menu(),
+stock = html.Div([
               # Row ``
                 html.H6(["Stock analysis"],
                             className="gs-header gs-table-header padded"),
@@ -190,8 +172,7 @@ stock = html.Div([  # page 3
                   get_graph1('id-os-country',200,jump='Oustanding by country'),
                   get_graph1('id-os-segment',200,jump='Oustanding by segment')
                 ], className="row "),
-              ], className="subpage")
-          ], className="page")
+              ])
 
 noPage = html.Div([  # 404
 
@@ -201,9 +182,13 @@ noPage = html.Div([  # 404
 
 # Describe the layout, or the UI, of the app
 app.layout = html.Div([
+  print_button(),
+  html.Div([
     dcc.Location(id='url', refresh=False),
+    get_menu(),
     html.Div(id='page-content')
-])
+  ],className='subpage')
+  ],className='page')
 
 # Update page
 @app.callback(
