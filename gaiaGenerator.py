@@ -15,8 +15,8 @@ def generate_granting(countries,segments,dates,granting_fields,nb_segments=5):
     demand_i=1000
     
     fpd_mt_i=0.008
-    active={'3M':0.98,'6M':0.93,'12M':0.85}
-    risk={'3M':0.01,'6M':0.03,'12M':0.09}
+    active={'3M':np.random.randint(95,99,len(dates))/100,'6M':np.random.randint(90,95,len(dates))/100,'12M':np.random.randint(80,88,len(dates))/100}
+    risk={'3M':np.random.randint(1,4,len(dates))/100,'6M':np.random.randint(4,8,len(dates))/100,'12M':np.random.randint(8,13,len(dates))/100}
     
     accepte_i=0.9
     refuse_i=0.1
@@ -66,7 +66,7 @@ def generate_stock(countries,segments,dates,stock_fields,nb_segments=5):
     #stratas={'R0':0.9,'R1':0.05,'R2':0.03,'R3':0.008,'R4':0.007,'R5':0.003,'R6':0.001,'R7':0.001,'CTX':0.05,'INS':0.05}
     stratas_i=np.array([0.9,0.05,0.03,0.008,0.007,0.003,0.001,0.001,0.05,0.05])
     #transfert={'R0':0.001,'R1':0.002,'R2':0.002,'R3':0.005,'R4':0.02,'R5':0.0,'R6':0.0,'R7':0.0,'CTX':0.0}
-    transfert_i=np.array([0.001,0.002,0.002,0.005,0.02,0.0,0.0,0.0,0.0])
+    transfert_i=np.array([0.0001,0.0002,0.0002,0.0005,0.002,0.0,0.0,0.0,0.0])
     unpaid_i=0.01
     
     segment_tuples=list(product(countries,segments))
@@ -78,8 +78,9 @@ def generate_stock(countries,segments,dates,stock_fields,nb_segments=5):
         country=list(list(list(zip(*segment_tuple)))[0])
         segment=list(list(list(zip(*segment_tuple)))[1])
         
-        encours=(np.random.rand(len(dates))+1)*5*encours_i
-        
+        #encours=(np.random.rand(len(dates))+1)*5*encours_i
+        encours=np.random.randn(len(dates)) * 0.03*encours_i + encours_i
+
         stratas=stratas_i*encours.reshape(len(encours),1)
         transfert=transfert_i*encours.reshape(len(encours),1)
         unpaid=encours*unpaid_i
