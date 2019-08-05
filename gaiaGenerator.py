@@ -27,6 +27,9 @@ def generate_granting(countries,segments,dates,granting_fields,nb_segments=5):
     a=[]
     
     for i in range(nb_segments):
+        active={'3M':np.random.randint(95,99,len(dates))/100,'6M':np.random.randint(90,95,len(dates))/100,'12M':np.random.randint(80,88,len(dates))/100}
+        risk={'3M':np.random.randint(1,4,len(dates))/100,'6M':np.random.randint(4,8,len(dates))/100,'12M':np.random.randint(8,13,len(dates))/100}
+
         segment_tuple=segment_tuples.pop(int(np.random.randint(0,len(segment_tuples),1)))
         
         segment_tuple=list(repeat(segment_tuple,len(dates)))

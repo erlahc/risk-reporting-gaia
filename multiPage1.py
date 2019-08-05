@@ -234,7 +234,7 @@ def display_page(pathname):
   Output('RAS-R2+', 'figure')],
   [Input('id-countries', 'value')])
 def update_ras_charts(selected_country):
-  return display_vintage(db.get_vintage(selected_country),selected_country
+  return display_vintage_RAS(db.get_vintage(country=selected_country,limit=True)['Vintage6M'],selected_country
     ),display_rr(db.get_rr(selected_country)[['COUNTRY','DATE','R0R1']],'R0R1'
     ),display_rr(db.get_rr(selected_country)[['COUNTRY','DATE','R0R4']],'R0R4'
     ),display_rr(db.get_rr(selected_country)[['COUNTRY','DATE','R2+']],'R2+'

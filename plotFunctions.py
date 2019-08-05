@@ -23,6 +23,27 @@ def display_vintage(filtered_df,country,segment=''):
 					'margin':dict(t=25,b=60,l=30,r=0)}
 	}
 
+def display_vintage_RAS(filtered_df,country):
+	traces=[]
+	titre='Vintage - '+ country
+	columns=['Vintage6M','EW','CL']
+
+	for i in columns:
+		traces.append(go.Scatter(
+				x=filtered_df['DATE'],
+	            y=filtered_df[i],
+	            name=i,
+	            mode='lines+markers',
+				))
+		
+	return{
+		'data':traces,
+		'layout': {	'xaxis':dict(categoryorder='array', categoryarray=filtered_df['DATE'].values, type="category"),
+					'yaxis':dict(tickformat=',.1%',hoverformat=',.1%',tickangle=270),
+					'legend':dict(orientation='h',xanchor='left',y=-0.40,font={'size':10}),
+					'margin':dict(t=25,b=60,l=30,r=0)}
+	}
+
 def display_multi_vintages(filtered_df,country,segment=''):
 	traces=[]
 
